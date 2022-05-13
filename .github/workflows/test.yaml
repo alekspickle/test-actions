@@ -6,6 +6,7 @@ on:
       message:
         description: "say something dirty"
         required: true
+        default: "wiscussy"
   pull_request: ~
 
 jobs:
@@ -17,6 +18,6 @@ jobs:
         run: echo "This is a PR!" 
       - name: How to detect whether you run on manual workflow
         if: "${{ github.event.inputs.message != '' }}"
-        run: echo "This is a PR!" 
+        run: echo "This is a manual workflow!" 
       - name: Substitute if not provided
         run: echo "${{ github.event.inputs.message || 'lol' }}"
