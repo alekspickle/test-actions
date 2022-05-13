@@ -6,6 +6,7 @@ on:
       message:
         description: "say something dirty"
         required: true
+        default: "wiscussy"
   pull_request: ~
 
 jobs:
