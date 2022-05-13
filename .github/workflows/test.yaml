@@ -1,0 +1,17 @@
+name: Test 
+
+on: 
+  workflow_dispatch:
+    inputs:
+      message:
+        description: "Hello action"
+        required: true
+        # No default
+  pull_request: ~
+
+jobs:
+  echo:
+    runs-on: ubuntu-latest
+    steps:
+      - name: How to detect whether you run on manual workflow 
+        run: echo '${{ github.event.inputs.message || "lol" }}'
