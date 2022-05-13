@@ -1,17 +1,22 @@
-name: Test 
+name: Time to shine luv 
 
 on: 
   workflow_dispatch:
     inputs:
       message:
-        description: "Hello action"
+        description: "say something dirty"
         required: true
-        # No default
   pull_request: ~
 
 jobs:
   echo:
     runs-on: ubuntu-latest
     steps:
-      - name: How to detect whether you run on manual workflow 
+      - name: How to detect whether you run on manual workflow
+        if: "${{ github.event.inputs.message == '' }}"
+        run: echo "This is a PR!" 
+      - name: How to detect whether you run on manual workflow
+        if: "${{ github.event.inputs.message != '' }}"
+        run: echo "This is a PR!" 
+      - name: Substitute if not provided
         run: echo "${{ github.event.inputs.message || 'lol' }}"
