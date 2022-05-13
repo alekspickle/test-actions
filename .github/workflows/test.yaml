@@ -14,4 +14,4 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: How to detect whether you run on manual workflow 
-        run: echo '${{ github.event.inputs.message || "lol" }}'
+        run: echo '${{ github.event.inputs.message || lol }}'
