@@ -10,14 +10,14 @@ on:
   pull_request: ~
 
 jobs:
-  echo:
+  give-me-a-chance:
     runs-on: ubuntu-latest
     steps:
-      - name: How to detect whether you run on manual workflow
+      - name: How to detect that you run on PR
         if: "${{ github.event.inputs.message == '' }}"
-        run: echo "This is a PR!" 
-      - name: How to detect whether you run on manual workflow
+        run: echo "This is a PR because required input is empty"
+      - name: How to detect that you run on manual workflow
         if: "${{ github.event.inputs.message != '' }}"
-        run: echo "This is a manual workflow!" 
+        run: echo "This is a manual workflow because someone send you a message: ${{ github.event.inputs.message }}"
       - name: Substitute if not provided
-        run: echo "${{ github.event.inputs.message || 'lol' }}"
+        run: echo "${{ github.event.inputs.message || 'don't you want to be friends?..' }}"
