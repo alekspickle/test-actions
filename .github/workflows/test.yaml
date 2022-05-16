@@ -1,17 +1,29 @@
-name: Test 
+name: Time to shine luv 
 
 on: 
   workflow_dispatch:
     inputs:
       message:
-        description: "Hello action"
+        description: "say something dirty"
         required: true
-        # No default
+        default: "wiscussy"
   pull_request: ~
 
 jobs:
-  echo:
+  give-me-a-chance:
     runs-on: ubuntu-latest
+    needs: ["wait-for-me"]
     steps:
-      - name: How to detect whether you run on manual workflow 
-        run: echo '${{ github.event.inputs.message || lol }}'
+      - name: How to detect that you run on PR
+        if: "${{ github.event.inputs.message == '' }}"
+        run: echo "This is a PR because required input is empty"
+      - name: How to detect that you run on manual workflow
+        if: "${{ github.event.inputs.message != '' }}"
+        run: echo "This is a manual workflow because someone send you a message: ${{ github.event.inputs.message }}"
+      - name: Substitute if not provided
+  wait-for-me:
+    runs-on: ubuntu-latest
+    if: "github.ref == 'refs/heads/master'"
+    steps:
+      - name: just have some fun
+        run: echo "By bitcoin with all my savings!(<|_<|)"
