@@ -12,7 +12,6 @@ on:
 jobs:
   give-me-a-chance:
     runs-on: ubuntu-latest
-    needs: ["wait-for-me"]
     steps:
       - name: How to detect that you run on PR
         if: "${{ github.event.inputs.message == '' }}"
@@ -29,6 +28,12 @@ jobs:
       - name: input is not provided
         if: "${{ github.events.inputs.message == '' }}"
         run: echo "Some one is chatty but has nothing to say"
+  waits-for-job:
+    runs-on: ubuntu-latest
+    needs: ["wait-for-me"]
+    steps:
+      - name: Waited
+        run: echo 'Now Dobby is free'
   wait-for-me:
     runs-on: ubuntu-latest
     if: "github.ref == 'refs/heads/master'"
