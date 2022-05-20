@@ -40,3 +40,17 @@ jobs:
     steps:
       - name: just have some fun
         run: echo "By bitcoin with all my savings!(<|_<|)"
+  set-var:
+    runs-on: ubuntu-latest
+    steps:
+      - name: set var to "1"
+        run: SOME_VAR=1 && echo '::set-output name=SOME_VAR::$SOME_VAR'
+      - name: dont set var but make output
+        run: echo '::set-output name=SOME_VAR2::$SOME_VAR2'
+  get-vars:
+    runs-on: ubuntu-latest
+    steps:
+      - name: get var that was set
+        run: echo 'This var was set to $SOME_VAR'
+      - name: get var that was not set
+        run: echo 'This var was not set - $SOME_VAR2'
