@@ -52,6 +52,6 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: get var that was set
-        run: echo 'This var was set to ${{ steps.main.outputs.SOME_VAR }}'
+        run: echo 'This var was set to ${{ steps.set-vars.outputs.SOME_VAR }}'
       - name: get var that was not set
-        run: echo 'This var was not set - ${{ steps.main.outputs.SOME_VAR2 }}'
+        run: echo 'This var was not set - ${{ steps.set-vars.outputs.SOME_VAR2 }}'
