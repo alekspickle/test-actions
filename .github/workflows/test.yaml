@@ -44,9 +44,15 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: set var to "1"
-        run: export SET=42 && echo $SET && echo '::set-output name=set::${SET}'
-      - name: dont set var but make output
-        run: echo '::set-output name=not_set::$NOT_SET'
+        id: set
+        run: |
+          export SET=42
+          echo $SET
+          echo '::set-output name=set::${SET}'
+          echo '::set-output name=not_set::$NOT_SET'
+     outputs:
+       set: ${{ steps.set.outputs.set }}
+       not_set: ${{ steps.set.outputs.not_set }}
   get-vars:
     needs: set-vars
     runs-on: ubuntu-latest
