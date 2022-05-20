@@ -40,7 +40,7 @@ jobs:
     steps:
       - name: just have some fun
         run: echo "By bitcoin with all my savings!(<|_<|)"
-  set-var:
+  set-vars:
     runs-on: ubuntu-latest
     steps:
       - name: set var to "1"
@@ -48,9 +48,10 @@ jobs:
       - name: dont set var but make output
         run: echo '::set-output name=SOME_VAR2::$SOME_VAR2'
   get-vars:
+    needs: set-vars
     runs-on: ubuntu-latest
     steps:
       - name: get var that was set
-        run: echo 'This var was set to $SOME_VAR'
+        run: echo 'This var was set to ${{ steps.main.outputs.SOME_VAR }}'
       - name: get var that was not set
-        run: echo 'This var was not set - $SOME_VAR2'
+        run: echo 'This var was not set - ${{ steps.main.outputs.SOME_VAR2 }}'
