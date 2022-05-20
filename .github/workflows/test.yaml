@@ -1,6 +1,6 @@
-name: Time to shine luv 
-
-on: 
+---
+name: Time to shine luv
+on:
   workflow_dispatch:
     inputs:
       message:
@@ -10,14 +10,33 @@ on:
   pull_request: ~
 
 jobs:
-  echo:
+  give-me-a-chance:
     runs-on: ubuntu-latest
     steps:
-      - name: How to detect whether you run on manual workflow
+      - name: How to detect that you run on PR
         if: "${{ github.event.inputs.message == '' }}"
-        run: echo "This is a PR!" 
-      - name: How to detect whether you run on manual workflow
+        run: echo "This is a PR because required input is empty"
+      - name: How to detect that you run on manual workflow
         if: "${{ github.event.inputs.message != '' }}"
-        run: echo "This is a manual workflow!" 
-      - name: Substitute if not provided
-        run: echo "${{ github.event.inputs.message || 'lol' }}"
+        run: >
+          echo "This is a manual workflow
+          because someone send you a message:
+          ${{ github.event.inputs.message }}"
+      - name: input provided
+        if: "${{ github.events.inputs.message != '' }}"
+        run: echo "Some one is chatty ${{ github.event.inputs.message }}"
+      - name: input is not provided
+        if: "${{ github.events.inputs.message == '' }}"
+        run: echo "Some one is chatty but has nothing to say"
+  waits-for-job:
+    runs-on: ubuntu-latest
+    needs: ["wait-for-me"]
+    steps:
+      - name: Waited
+        run: echo 'Now Dobby is free'
+  wait-for-me:
+    runs-on: ubuntu-latest
+    if: "github.ref == 'refs/heads/master'"
+    steps:
+      - name: just have some fun
+        run: echo "By bitcoin with all my savings!(<|_<|)"
