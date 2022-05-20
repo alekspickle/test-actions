@@ -44,14 +44,14 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: set var to "1"
-        run: SOME_VAR=1 && echo '::set-output name=SOME_VAR::$SOME_VAR'
+        run: SET=1 && echo $SET && echo '::set-output name=set::$SET'
       - name: dont set var but make output
-        run: echo '::set-output name=SOME_VAR2::$SOME_VAR2'
+        run: echo '::set-output name=not_set::$NOT_SET'
   get-vars:
     needs: set-vars
     runs-on: ubuntu-latest
     steps:
       - name: get var that was set
-        run: echo 'This var was set to ${{ needs.set-vars.outputs.SOME_VAR }}'
+        run: echo 'This var was set to ${{ needs.set-vars.outputs.set }}'
       - name: get var that was not set
-        run: echo 'This var was not set - ${{ needs.set-vars.outputs.SOME_VAR2 }}'
+        run: echo 'This var was not set - ${{ needs.set-vars.outputs.not_set }}'
