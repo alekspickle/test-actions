@@ -10,7 +10,7 @@ on:
   pull_request: ~
 
 jobs:
-  give-me-a-chance:
+  print-input-based-on-workflow-on-type:
     runs-on: ubuntu-latest
     steps:
       - name: How to detect that you run on PR
@@ -30,11 +30,11 @@ jobs:
         run: echo "Some one is chatty but has nothing to say"
   waits-for-job:
     runs-on: ubuntu-latest
-    needs: ["wait-for-me"]
+    needs: ["run-if-master"]
     steps:
       - name: Waited
         run: echo 'Now Dobby is free'
-  wait-for-me:
+  run-if-master:
     runs-on: ubuntu-latest
     if: "github.ref == 'refs/heads/master'"
     steps:
@@ -43,18 +43,18 @@ jobs:
   set-vars:
     runs-on: ubuntu-latest
     steps:
-      - name: set var to "1"
+      - name: set vars to be used after
         id: set
         run: |
-          export SET=suck-it-jin-yang
-          echo $SET
-          echo '::set-output name=set::${SET}'
-          echo '::set-output name=not_set::${NOT_SET}'
+          export "LOL=suck-it-jin-yang"
+          echo "::set-output name=lol::${LOL}"
+    outputs:
+      lol: ${{ steps.set.outputs.lol }}
   get-vars:
     needs: set-vars
     runs-on: ubuntu-latest
     steps:
       - name: get var that was set
-        run: echo 'This var was set to ${{ needs.set.outputs.set }}'
+        run: echo 'This var was set to ${{ needs.set-vars.outputs.lol }}'
       - name: get var that was not set
-        run: echo 'This var was not set - ${{ needs.set.outputs.not_set }}'
+        run: echo 'This var was not set not_set ${{ env.not_set }}>'
