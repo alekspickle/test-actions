@@ -40,10 +40,11 @@ jobs:
     steps:
       - name: just have some fun
         run: echo "By bitcoin with all my savings!(<|_<|)"
-    outputs:
   set-multijob-vars:
     runs-on: ubuntu-latest
     steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
       - name: set vars to be used after
         id: set
         run: |
@@ -58,7 +59,7 @@ jobs:
       branch: ${{ steps.set.outputs.branch }}
       lol: ${{ steps.set.outputs.lol }}
   get-vars:
-    needs: [set-multijob-vars, check-up-to-date]
+    needs: [set-multijob-vars]
     runs-on: ubuntu-latest
     steps:
       - name: cancel whole job on condition
