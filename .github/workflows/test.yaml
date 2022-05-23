@@ -62,6 +62,10 @@ jobs:
     needs: [set-multijob-vars]
     runs-on: ubuntu-latest
     steps:
+      - name: print info
+        run: |
+         echo github.ref ${{ github.ref }}
+         echo ${{ github.ref == 'refs/head/master' }}
       - name: cancel whole job on condition
         if: ${{ github.ref == 'refs/heads/master' }}
         uses: andymckay/cancel-action@0.2
