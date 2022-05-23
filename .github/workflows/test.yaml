@@ -40,7 +40,8 @@ jobs:
     steps:
       - name: just have some fun
         run: echo "By bitcoin with all my savings!(<|_<|)"
-  set-vars:
+    outputs:
+  set-multijob-vars:
     runs-on: ubuntu-latest
     steps:
       - name: set vars to be used after
@@ -48,13 +49,30 @@ jobs:
         run: |
           export "LOL=suck-it-jin-yang"
           echo "::set-output name=lol::${LOL}"
+      - name: set branch and days vars
+        run: |
+          # I know it's meningless to do when you have GitHub context, just f.e.
+          branch=$(git branch --show-current)
+          echo "::set-output name=branch::${branch}"
+          echo "::set-output name=days::5"
     outputs:
+      branch: ${{ steps.set.outputs.branch }}
+      days: ${{ steps.set.outputs.days }}
       lol: ${{ steps.set.outputs.lol }}
   get-vars:
-    needs: set-vars
+    needs: [set-multijob-vars, check-up-to-date]
     runs-on: ubuntu-latest
     steps:
       - name: get var that was set
-        run: echo 'This var was set to ${{ needs.set-vars.outputs.lol }}'
-      - name: get var that was not set
-        run: echo 'This var was not set not_set ${{ env.not_set }}>'
+        run: echo 'Gilfoyle says ${{ needs.set-multijob-vars.outputs.lol }}'
+      - name: print if the repo needs update
+        run: |
+          echo 'Repo is up to date ${{ needs.check-up-to-date.outputs.branch }}'
+          echo 'Days lasted ${{ needs.check-up-to-date.outputs.days }}'
+      - name: skip this if output from the job is different from expected
+        if: ${{ needs.set-multijob-vars.outputs.branch == 'main' }}
+        run: |
+          echo 'Hey! You finally awake, dragonborn.'
+  after-all:
+    runs-on: ubuntu-latest
+    needs:
