@@ -65,7 +65,8 @@ jobs:
       - name: print info
         run: |
          echo github.ref ${{ github.ref }}
-         echo ${{ github.ref == 'refs/head/master' }}
+         echo github.ref == master ${{ github.ref == 'refs/head/master' }}
+         echo ${GITHUB_REF##*/}
       - name: cancel whole job on condition
         if: ${{ github.ref == 'refs/heads/master' }}
         uses: andymckay/cancel-action@0.2
