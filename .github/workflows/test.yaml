@@ -61,13 +61,11 @@ jobs:
          echo github.ref ${{ github.ref }}
          echo github.ref == master ${{ github.ref == 'refs/heads/master' }}
          echo ${GITHUB_REF##*/}
-      - name: Cancel Previous Runs
-        if: ${{ github.ref == 'refs/heads/master' }}
-        uses: styfle/cancel-workflow-action@0.9.1
+         echo 'Branch that set as output ${{ needs.set-multijob-vars.outputs.branch }}'
       - name: get var that was set
         run: echo 'Gilfoyle says ${{ needs.set-multijob-vars.outputs.lol }}'
-      - name: skip this if output from the job is not expected
-        if: ${{ needs.set-multijob-vars.outputs.branch == 'main' }}
+      - name: run on test only 
+        if: ${{ needs.set-multijob-vars.outputs.branch == 'test' }}
         run: echo 'Hey! You finally awake, dragonborn.'
   skip-if-output:
     runs-on: ubuntu-latest
