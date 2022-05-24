@@ -34,6 +34,26 @@ jobs:
     steps:
       - name: just have some fun
         run: echo "By bitcoin with all my savings!(<|_<|)"
+  github-wtf:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+      - name: inconsistency
+        run: |
+          SIMPLE=string
+          echo $SIMPLE
+          echo ${SIMPLE}
+          echo "$SIMPLE"
+          echo "${SIMPLE}"
+
+          BRANCH=$(git branch --show-current)
+          echo $BRANCH
+          echo ${BRANCH}
+          echo "$BRANCH - ${BRANCH}"
+          echo "BREAD=borodinsky" >> $GITHUB_ENV
+          echo "$BREAD "$BREAD
+          echo "${{ env.BREAD }}" ${{ env.BREAD }}
   set-multijob-vars:
     runs-on: ubuntu-latest
     steps:
@@ -44,14 +64,26 @@ jobs:
         run: |
           export "LOL=suck-it-jin-yang"
           echo "::set-output name=lol::${LOL}"
-      - name: set branch and wf_run vars
+      - name: set updatability output
+        id: update
         run: |
-          # I know it's meningless to do when you have GitHub context, just f.e.
-          BRANCH=$(git branch --show-current)
-          echo 'About to set a branch to ${{ env.BRANCH }}'
-          echo "::set-output name=branch::${BRANCH}"
+          git fetch
+          DIFF=$(git diff origin/master...origin/test)
+          if [ "$DIFF" != "" ];then
+            echo "Update needed"
+
+          TEST=$(git rev-parse origin/test)
+          MASTER=$(git rev-parse origin/master)
+          echo $TEST == $MASTER
+          if [[ $TEST != $MASTER ]];then
+            RUN="update"
+          fi
+          echo set from condition RUN=$RUN 
+          echo Current $RUN
+          echo About to set a branch to $RUN
+          echo ::set-output name=update::$RUN
     outputs:
-      branch: ${{ steps.set.outputs.branch }}
+      update: ${{ steps.update.outputs.update }}
       lol: ${{ steps.set.outputs.lol }}
   get-vars:
     needs: [set-multijob-vars]
@@ -62,20 +94,20 @@ jobs:
          echo github.ref ${{ github.ref }}
          echo github.ref == master ${{ github.ref == 'refs/heads/master' }}
          echo ${GITHUB_REF##*/}
-         echo 'Branch that set as output ${{ needs.set-multijob-vars.outputs.branch }}'
+         echo 'Output branch ${{ needs.set-multijob-vars.outputs.update }}'
       - name: get var that was set
         run: echo 'Gilfoyle says ${{ needs.set-multijob-vars.outputs.lol }}'
-      - name: run on test only 
-        if: ${{ needs.set-multijob-vars.outputs.branch == 'test' }}
+      - name: run update routine
+        if: ${{ needs.set-multijob-vars.outputs.update == 'update' }}
         run: echo 'Hey! You finally awake, dragonborn.'
   skip-if-output:
     runs-on: ubuntu-latest
     needs: [set-multijob-vars]
-    if: ${{ needs.set-multijob-vars.outputs.branch != 'master' }}
+    if: ${{ needs.set-multijob-vars.outputs.update != 'update' }}
     steps:
       - name: print output
-        run: echo 'Still runnin ${{ needs.set-multijob-vars.outputs.branch }}'
-  skipped-on-master:
+        run: echo 'Updatable:${{ needs.set-multijob-vars.outputs.branch }}'
+  run-only-when-master-up-to-date-with-test:
     runs-on: ubuntu-latest
     needs: [skip-if-output]
     steps:
