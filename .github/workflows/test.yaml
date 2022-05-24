@@ -48,7 +48,7 @@ jobs:
         run: |
           # I know it's meningless to do when you have GitHub context, just f.e.
           branch=$(git branch --show-current)
-          echo 'About to set a branch to $branch'
+          echo 'About to set a branch to ${branch}'
           echo "::set-output name=branch::${branch}"
     outputs:
       branch: ${{ steps.set.outputs.branch }}
@@ -71,18 +71,18 @@ jobs:
   skip-if-output:
     runs-on: ubuntu-latest
     needs: [set-multijob-vars]
-    if: ${{ needs.set-multijob-vars.outputs.branch == 'master' }}
+    if: ${{ needs.set-multijob-vars.outputs.branch != 'master' }}
     steps:
       - name: print output
         run: echo 'Still runnin ${{ needs.set-multijob-vars.outputs.branch }}'
-  master-only:
+  skipped-on-master:
     runs-on: ubuntu-latest
     needs: [skip-if-output]
     steps:
       - name: sup
         run: |
-          echo "Aha, here we are on master again"
-          echo "So this wf is skipped because of the condition on
+          echo "Aha, here we go again"
+          echo "So this wf is not skipped because of the condition on
           `skip-if-output` job"
   after-all:
     runs-on: ubuntu-latest
