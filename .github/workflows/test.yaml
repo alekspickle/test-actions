@@ -67,9 +67,9 @@ jobs:
          echo github.ref ${{ github.ref }}
          echo github.ref == master ${{ github.ref == 'refs/head/master' }}
          echo ${GITHUB_REF##*/}
-      - name: cancel whole job on condition
+      - name: Cancel Previous Runs
         if: ${{ github.ref == 'refs/heads/master' }}
-        uses: andymckay/cancel-action@0.2
+        uses: styfle/cancel-workflow-action@0.9.1
       - name: get var that was set
         run: echo 'Gilfoyle says ${{ needs.set-multijob-vars.outputs.lol }}'
       - name: skip this if output from the job is not expected
