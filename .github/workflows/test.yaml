@@ -47,9 +47,9 @@ jobs:
       - name: set branch and wf_run vars
         run: |
           # I know it's meningless to do when you have GitHub context, just f.e.
-          branch=$(git branch --show-current)
-          echo 'About to set a branch to ${branch}'
-          echo "::set-output name=branch::${branch}"
+          BRANCH=$(git branch --show-current)
+          echo 'About to set a branch to ${{ env.BRANCH }}'
+          echo "::set-output name=branch::${BRANCH}"
     outputs:
       branch: ${{ steps.set.outputs.branch }}
       lol: ${{ steps.set.outputs.lol }}
