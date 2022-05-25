@@ -71,11 +71,13 @@ jobs:
           DIFF=$(git diff origin/master...origin/test)
           if [ "$DIFF" != "" ];then
             echo "Update needed"
-
-          TEST=$(git rev-parse origin/test)
-          MASTER=$(git rev-parse origin/master)
-          echo $TEST == $MASTER
-          if [[ $TEST != $MASTER ]];then
+          fi
+          # This is dump to do because of merge commits
+          # TEST=$(git rev-parse origin/test)
+          # MASTER=$(git rev-parse origin/master)
+          # echo $TEST == $MASTER
+          # what we do instead
+          if [[ $DIFF != "" ]];then
             RUN="update"
           fi
           echo set from condition RUN=$RUN 
