@@ -68,6 +68,7 @@ jobs:
         id: update
         run: |
           git fetch
+          git remote
           DIFF=$(git diff origin/master...origin/test)
           if [ "$DIFF" != "" ];then
             echo "Update needed"
