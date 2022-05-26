@@ -68,20 +68,19 @@ jobs:
         id: update
         run: |
           git fetch
-          git remote
-          DIFF=$(git diff $(git branch --show-current)...origin/test)
-          if [ "$DIFF" != "" ];then
-            echo "Update needed"
-          fi
+          #DIFF=$(git diff $(git branch --show-current)...origin/test)
+          #if [ "$DIFF" != "" ];then
+          #  echo "Update needed"
+          #fi
           # This is dump to do because of merge commits
-          # TEST=$(git rev-parse origin/test)
-          # MASTER=$(git rev-parse origin/master)
-          # echo $TEST == $MASTER
-          # what we do instead
-          if [[ $DIFF != "" ]];then
+          #
+          TEST=$(git rev-parse origin/test)
+          MASTER=$(git rev-parse origin/master)
+          echo $TEST == $MASTER
+          if [[ $TEST != $MASTER ]];then
             RUN="update"
           fi
-          echo set from condition RUN=$RUN 
+          echo set from condition RUN=$RUN
           echo Current $RUN
           echo About to set a branch to $RUN
           echo ::set-output name=update::$RUN
