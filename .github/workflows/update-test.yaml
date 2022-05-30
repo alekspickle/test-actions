@@ -9,7 +9,12 @@ jobs:
     steps:
       - name: checkout
         uses: actions/checkout@v3
+        with:
+          ref: refs/heads/${{ github.head_ref }}
       - name: push
         run: |
           git fetch
-          git push origin master:test
+          git pull --rebase
+          CURRENT=$(git branch --show-current)
+          echo Current branch - $CURRENT
+          git push origin $CURRENT:test
