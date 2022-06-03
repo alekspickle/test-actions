@@ -9,10 +9,8 @@ jobs:
     steps:
       - name: checkout
         uses: actions/checkout@v3
-      - name: push
-        run: |
-          git fetch
-          git pull --rebase
-          CURRENT=$(git branch --show-current)
-          echo Current branch - $CURRENT
-          git push origin $CURRENT:test
+      - name: Commit changes
+        uses: EndBug/add-and-commit@v9
+        with:
+          message: 'commit and push changes'
+          push: "origin master:test"
