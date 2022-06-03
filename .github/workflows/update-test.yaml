@@ -1,16 +1,35 @@
 ---
 name: update-test
 on:
-  push:
-    branches: [master]
+  schedule:
+    - cron: 0 1 * * *
 jobs:
   update-test:
     runs-on: ubuntu-latest
     steps:
       - name: checkout
         uses: actions/checkout@v3
-      - name: Commit changes
-        uses: EndBug/add-and-commit@v9
         with:
-          message: 'commit and push changes'
-          push: "origin master:test"
+          ref: master
+      - name: check that the branch needs to be updated
+        id: check
+        run: |
+          git fetch
+          TEST=$(git rev-parse origin/test)
+          MASTER=$(git rev-parse origin/master)
+          echo $TEST == $MASTER
+          if [[ $TEST != $MASTER ]];then
+            RUN="update"
+          fi
+          echo set from condition RUN=$RUN
+          echo ::set-output name=update::$RUN
+      - name: push
+        if: steps.check.outputs.update == 'update'
+        run: |
+          git fetch
+          git config --global user.name 'alekspickle'
+          git config --global user.email 'aleks.work2222@gmail.com'
+           
+          CURRENT=$(git branch --show-current)
+          echo Current branch - $CURRENT
+          git push origin $CURRENT:test
