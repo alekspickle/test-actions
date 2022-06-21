@@ -1,0 +1,20 @@
+---
+name: test different actions from marketplace 
+on:
+  workflow_dispatch:
+    inputs:
+      branch:
+        description: "choose the branch to run action against"
+        required: true
+        default: "test"
+
+jobs:
+  rust-toolchain:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions-rs/toolchain@v1
+        with:
+          profile: default
+          toolchain: 1.60.0 
+      - name: Call rustfmt
+        run: rustfmt --edition 2021

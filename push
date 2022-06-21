@@ -1,7 +1,0 @@
-      - name: push
-        run: |
-          git fetch
-          git pull --rebase
-          CURRENT=$(git branch --show-current)
-          echo Current branch - $CURRENT
-          git push origin $CURRENT:test
