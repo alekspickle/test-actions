@@ -33,7 +33,6 @@ jobs:
     steps:
       - name: just have some fun
         run: echo "By bitcoin with all my savings!(<|_<|)"
-      - {}
 
   run-if-master:
     runs-on: ubuntu-latest
