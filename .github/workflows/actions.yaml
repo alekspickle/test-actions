@@ -1,5 +1,5 @@
 ---
-name: test different actions from marketplace 
+name: test different actions from marketplace
 on:
   workflow_dispatch:
     inputs:
@@ -15,6 +15,6 @@ jobs:
       - uses: actions-rs/toolchain@v1
         with:
           profile: default
-          toolchain: 1.60.0 
+          toolchain: 1.60.0
       - name: Call rustfmt
         run: rustfmt --edition 2021
