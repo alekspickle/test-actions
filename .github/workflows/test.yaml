@@ -135,7 +135,7 @@ jobs:
           env.GITHUB_ENV }}`
           echo "Current $DECLARED"
           echo "GITHUB_REF=not-test" >> $GITHUB_ENV
-          echo ${GITHUB_REF#refs/heads/} 
+          echo ${{ github.ref }}
       - name: print branch after set
         run: echo "Current= ${{ env.GITHUB_REF }}"
   after-all:
