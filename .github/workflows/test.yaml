@@ -129,6 +129,7 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v2
+        with:
           ref: master
       - run: echo $(git branch --show-current)
       - run: echo ${{ env.GITHUB_REF }}

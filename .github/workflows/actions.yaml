@@ -11,7 +11,7 @@ on:
 jobs:
   repo_checkout:
     runs-on: ubuntu-latest
-    env: 
+    env:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v2
