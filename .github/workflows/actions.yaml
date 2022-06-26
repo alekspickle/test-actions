@@ -26,7 +26,10 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v2
         with:
-          ref: ${{ env.GITHUB_REF }} 
+          ref: ${{ github.env.GITHUB_REF }} 
+      - run: echo $(git branch --show-current)
+      - run: echo ${{ env.GITHUB_REF }}
+      - run: echo ${{ github.ref }}
   rust-toolchain:
     runs-on: ubuntu-latest
     steps:
