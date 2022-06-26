@@ -128,6 +128,9 @@ jobs:
     runs-on: ubuntu-latest
     needs: get-vars
     steps:
+      - run: echo $(git branch --show-current)
+      - run: echo ${{ env.GITHUB_REF }}
+      - run: echo ${{ github.ref }}
       - name: Declare new branch through GITHUB_REF
         run: |
           DECLARED=`${{ env.GITHUB_REF == '' &&

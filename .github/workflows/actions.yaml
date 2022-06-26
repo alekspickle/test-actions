@@ -12,11 +12,12 @@ jobs:
   repo_checkout:
     runs-on: ubuntu-latest
     env: 
-      GITHUB_REF: ${{ env.GITHUB_REF != '' env.GITHUB_REF && github.event.inputs.branch}}
     steps:
       - name: Checkout repository
         uses: actions/checkout@v2
       - run: echo $(git branch --show-current)
+      - run: echo ${{ env.GITHUB_REF }}
+      - run: echo ${{ github.ref }}
   rust-toolchain:
     runs-on: ubuntu-latest
     steps:
