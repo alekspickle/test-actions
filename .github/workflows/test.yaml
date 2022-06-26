@@ -126,8 +126,10 @@ jobs:
           `skip-if-output` job"
   mess-with-a-branch:
     runs-on: ubuntu-latest
-    needs: get-vars
     steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+          ref: master
       - run: echo $(git branch --show-current)
       - run: echo ${{ env.GITHUB_REF }}
       - run: echo ${{ github.ref }}
