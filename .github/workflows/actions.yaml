@@ -9,6 +9,14 @@ on:
         default: "test"
 
 jobs:
+  checkout:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+        with:
+          ref: ${{ env.GITHUB_REF != '' env.GITHUB_REF && github.event.inputs.branch}}
+      - run: echo $(git branch --show-current)
   rust-toolchain:
     runs-on: ubuntu-latest
     steps:
