@@ -7,7 +7,8 @@ on:
         description: "choose the branch to run action against"
         required: true
         default: "test"
-
+env:
+  GITHUB_REF: test
 jobs:
   repo_checkout:
     runs-on: ubuntu-latest
@@ -25,7 +26,7 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v2
         with:
-          ref: ${{ github.env.GITHUB_REF }} 
+          ref: ${{ env.GITHUB_REF == '' && 'master' || env.GITHUB_REF }} 
       - run: echo $(git branch --show-current)
       - run: echo ${{ env.GITHUB_REF }}
       - run: echo ${{ github.ref }}
