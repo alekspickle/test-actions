@@ -76,7 +76,7 @@ jobs:
           git fetch
           #DIFF=$(git diff $(git branch --show-current)...origin/test)
           #if [ "$DIFF" != "" ];then
-          #  echo "Update needed"
+          #  echo "Updat needed"
           #fi
           # This is dump to do because of merge commits
           #
