@@ -29,7 +29,7 @@ jobs:
           git fetch
           git config --global user.name 'alekspickle'
           git config --global user.email 'aleks.work2222@gmail.com'
-           
+
           CURRENT=$(git branch --show-current)
           echo Current branch - $CURRENT
           git push origin $CURRENT:test

@@ -129,9 +129,15 @@ jobs:
     needs: get-vars
     steps:
       - name: Declare new branch through GITHUB_REF
-        run: echo "Current: ${{ env.GITHUB_REF }}" && "GITHUB_REF=not-test" >> $GITHUB_ENV
+        run: |
+          DECLARED=`${{ env.GITHUB_REF == '' &&
+          'GITHUB_REF is not declared' ||
+          env.GITHUB_ENV }}`
+          echo "Current $DECLARED"
+          echo "GITHUB_REF=not-test" >> $GITHUB_ENV
+          echo ${{ github.ref }}
       - name: print branch after set
-        run: echo "Current: ${{ env.GITHUB_REF }}" 
+        run: echo "Current= ${{ env.GITHUB_REF }}"
   after-all:
     runs-on: ubuntu-latest
     needs: get-vars
