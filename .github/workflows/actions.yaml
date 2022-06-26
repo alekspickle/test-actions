@@ -1,5 +1,5 @@
 ---
-name: test different actions from marketplace
+name: marketplace actions
 on:
   workflow_dispatch:
     inputs:
@@ -9,13 +9,13 @@ on:
         default: "test"
 
 jobs:
-  checkout:
+  repo_checkout:
     runs-on: ubuntu-latest
+    env: 
+      GITHUB_REF: ${{ env.GITHUB_REF != '' env.GITHUB_REF && github.event.inputs.branch}}
     steps:
       - name: Checkout repository
         uses: actions/checkout@v2
-        with:
-          ref: ${{ env.GITHUB_REF != '' env.GITHUB_REF && github.event.inputs.branch}}
       - run: echo $(git branch --show-current)
   rust-toolchain:
     runs-on: ubuntu-latest
