@@ -31,13 +31,12 @@ jobs:
         run: echo "Some one is chatty but has nothing to say"
   test-weird-patterns:
     runs-on: ubuntu-latest
-    if: ${{ github.env.SOME_VAR == "random_var" }}
     steps:
       - name: just have some fun
         run: echo "By bitcoin with all my savings!(<|_<|)"
   test-env:
     runs-on: ubuntu-latest
-    if: ${{ github.env.SOME_VAR == "random_var" && env.SOME_VAR == "random_var" }}
+    if: github.env.SOME_VAR == 'random_var' && env.SOME_VAR == 'random_var'
     steps:
       - name: just have some fun
         run: echo "By bitcoin with all my savings!(<|_<|)"
