@@ -8,7 +8,8 @@ on:
         required: true
         default: "wiscussy"
   pull_request: ~
-
+env:
+  SOME_VAR: "random_value"
 jobs:
   print-input-based-on-workflow-on-type:
     runs-on: ubuntu-latest
@@ -33,7 +34,12 @@ jobs:
     steps:
       - name: just have some fun
         run: echo "By bitcoin with all my savings!(<|_<|)"
-
+  test-env:
+    runs-on: ubuntu-latest
+    if: github.env.SOME_VAR == 'random_var'
+    steps:
+      - name: just have some fun
+        run: echo "By bitcoin with all my savings!(<|_<|)"
   run-if-master:
     runs-on: ubuntu-latest
     if: "github.ref == 'refs/heads/master'"
