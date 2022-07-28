@@ -4,7 +4,7 @@ on:
   workflow_dispatch:
     inputs:
       message:
-        description: "say something dirty"
+        description: "greeting message"
         required: true
         default: "wiscussy"
   pull_request: ~
@@ -21,7 +21,7 @@ jobs:
         if: "${{ github.event.inputs.message != '' }}"
         run: >
           echo "This is a manual workflow
-          because someone send you a message:
+          with a message:
           ${{ github.event.inputs.message }}"
       - name: input provided
         if: "${{ github.events.inputs.message != '' }}"
