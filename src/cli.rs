@@ -1,4 +1,4 @@
-use crate::defs::JobInfo;
+use crate::defs::{JobInfo, RunInfo};
 use octocrab::{models::RunId, Octocrab, Result};
 use rocket::{Build, Rocket};
 use structopt::StructOpt;
@@ -7,7 +7,7 @@ const NAME: &str = "gh-rs";
 
 #[derive(Debug, Clone, StructOpt)]
 #[structopt(name = NAME)]
-pub struct Cli {
+pub struct AppOptions {
     /// Choose a name for your app
     #[structopt(long, short = "n", env, default_value = NAME)]
     pub app_name: String,
@@ -36,13 +36,21 @@ pub struct Cli {
 #[derive(Debug)]
 pub struct App {
     pub gh: Octocrab,
-    pub rocket: Rocket<Build>,
-    pub opts: crate::cli::Cli,
+    // pub rocket: Option<Rocket<Build>>,
+    pub opts: AppOptions,
 }
 
-impl Cli {
+impl App {
+    pub fn new(gh: Octocrab, opts: AppOptions) -> Self {
+        Self { gh, opts }
+    }
+
+    // pub fn rocket(&self) -> Rocket<Build> {
+    //     self.rocket.clone().unwrap()
+    // }
+
     pub async fn get_jobs(&self, api: Octocrab, id: RunId) -> Result<Vec<JobInfo>> {
-        let wf = api.workflows(&self.gh_user, &self.repo_name);
+        let wf = api.workflows(&self.opts.gh_user, &self.opts.repo_name);
         let mut page = wf
             .list_jobs(id.clone())
             .per_page(50)
@@ -56,7 +64,7 @@ impl Cli {
     }
 
     pub async fn get_runs(&self, api: Octocrab) -> Result<Vec<RunInfo>> {
-        let wf = api.workflows(&self.gh_user, &self.repo_name);
+        let wf = api.workflows(&self.opts.gh_user, &self.opts.repo_name);
         let mut page = wf
             .list_all_runs()
             .per_page(50)
@@ -64,6 +72,8 @@ impl Cli {
             .send()
             .await
             .unwrap();
-        let jobs: Vec<JobInfo> = page.take_items().into_iter().map(JobInfo::from).collect();
+        let runs: Vec<RunInfo> = page.take_items().into_iter().map(RunInfo::from).collect();
+
+        Ok(runs)
     }
 }

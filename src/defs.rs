@@ -1,10 +1,39 @@
-use octocrab::{
-    models::{
-        workflows::{Job, Step},
-        JobId,
-    },
-    Octocrab,
+use octocrab::models::{
+    workflows::{Job, Run, Step},
+    JobId, RunId,
 };
+
+/// Struct aggregating useful job info
+#[derive(Debug)]
+pub struct RunInfo {
+    pub id: RunId,
+    pub name: String,
+    pub head_branch: String,
+    pub status: String,
+    pub jobs_url: String,
+    pub conclusion: Option<String>,
+}
+
+impl From<Run> for RunInfo {
+    fn from(run: Run) -> Self {
+        let Run {
+            id,
+            name,
+            status,
+            head_branch,
+            conclusion,
+            ..
+        } = run;
+        Self {
+            id,
+            name,
+            status,
+            conclusion,
+            head_branch,
+            jobs_url: run.jobs_url.to_string(),
+        }
+    }
+}
 
 /// Struct aggregating useful job info
 #[derive(Debug)]
