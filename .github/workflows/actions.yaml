@@ -6,9 +6,9 @@ on:
       branch:
         description: "choose the branch to run action against"
         required: true
-        default: "test"
+        default: "test-actions"
 env:
-  GITHUB_REF: test
+  GITHUB_REF: test-actions
 jobs:
   repo_checkout:
     runs-on: ubuntu-latest

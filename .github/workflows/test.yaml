@@ -80,13 +80,13 @@ jobs:
         id: update
         run: |
           git fetch
-          #DIFF=$(git diff $(git branch --show-current)...origin/test)
+          #DIFF=$(git diff $(git branch --show-current)...origin/test-actions)
           #if [ "$DIFF" != "" ];then
           #  echo "Updat needed"
           #fi
           # This is dump to do because of merge commits
           #
-          TEST=$(git rev-parse origin/test)
+          TEST=$(git rev-parse origin/test-actions)
           MASTER=$(git rev-parse origin/master)
           echo $TEST == $MASTER
           if [[ $TEST != $MASTER ]];then

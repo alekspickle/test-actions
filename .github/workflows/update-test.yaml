@@ -15,7 +15,7 @@ jobs:
         id: check
         run: |
           git fetch
-          TEST=$(git rev-parse origin/test)
+          TEST=$(git rev-parse origin/test-actions)
           MASTER=$(git rev-parse origin/master)
           echo $TEST == $MASTER
           if [[ $TEST != $MASTER ]];then
@@ -28,8 +28,7 @@ jobs:
         run: |
           git fetch
           git config --global user.name 'alekspickle'
-          git config --global user.email 'aleks.work2222@gmail.com'
 
           CURRENT=$(git branch --show-current)
           echo Current branch - $CURRENT
-          git push origin $CURRENT:test
+          git push origin $CURRENT:test-actions
