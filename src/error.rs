@@ -10,7 +10,13 @@ pub enum Error {
 
     #[error("invalid header (expected {expected:?}, found {found:?})")]
     InvalidHeader { expected: String, found: String },
-    
+
+    #[error("JWT error")]
+    JWT(#[from] jsonwebtoken::errors::Error),
+
+    #[error("Service error")]
+    Octocrab(#[from] octocrab::Error),
+
     #[error("unknown data store error")]
     Unknown,
 }
