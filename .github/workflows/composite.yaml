@@ -1,17 +1,16 @@
-name: Name
-
+name: 'Name'
 inputs:
   name:
-    description: Some value
+    description: 'Some value'
     type: string
-    required: true
+    default: 'wiscussy'
 
 outputs:
   greet-text:
     value: ${{ steps.greet.outputs.greet_text }}
 
 runs:
-  uses: "composite"
+  using: "composite"
   steps:
     - id: greet
     - run: echo "greet_text='Hello. ${{ inputs.name }}'" >> $GITHUB_OUTPUT
