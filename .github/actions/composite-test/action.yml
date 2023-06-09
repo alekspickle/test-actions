@@ -15,4 +15,5 @@ runs:
     - name: Swoooosh
       id: greet
       run: echo "greet_text='Hello. ${{ inputs.name }}'" >> $GITHUB_OUTPUT
+      shell: bash
 
