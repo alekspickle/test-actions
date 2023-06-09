@@ -14,7 +14,10 @@ runs:
   steps:
     - name: Swoooosh
       id: greet
-      run: echo "greet_text='Hello. ${{ inputs.name }}'" >> $GITHUB_OUTPUT
+      run: |
+        GREET_TEXT='Hello. ${{ inputs.name }}
+        echo $GREET_TEXT >> $GITHUB_STEP_SUMMARY
+        echo "greet_text=$GREET_TEXT" >> $GITHUB_OUTPUT
       shell: bash
     - uses: actions/setup-node@v3
 
