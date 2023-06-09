@@ -16,4 +16,5 @@ runs:
       id: greet
       run: echo "greet_text='Hello. ${{ inputs.name }}'" >> $GITHUB_OUTPUT
       shell: bash
+    - uses: dariuszkaras/smart-action@v1 
 
