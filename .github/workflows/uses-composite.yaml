@@ -11,6 +11,7 @@ jobs:
   greet:
     runs-on: ubuntu-latest
     steps:
+      - uses: actions/checkout@v3
       - name: Swooooosh
         uses: ./.github/actions/composite-test
         with:
