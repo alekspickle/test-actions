@@ -1,0 +1,16 @@
+---
+name: Use composite action
+on:
+  workflow_dispatch:
+    inputs:
+      name:
+        description: "Name to greet"
+        required: true
+        default: "wiscussy"
+jobs:
+  greet:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: alekspickle/composite@v1
+        with:
+          name: ${{ inputs.name }}
