@@ -13,6 +13,9 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       - name: Swooooosh
+        id: composite
         uses: ./.github/actions/composite-test
         with:
           name: ${{ inputs.name }}
+      - name: Print output
+        run: echo ${{ steps.composite.output.greet-text }}
