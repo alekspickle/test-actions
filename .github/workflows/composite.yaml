@@ -1,4 +1,4 @@
-name: Name with input:  ${{ inputs.name }}
+name: Name
 
 inputs:
   name:
