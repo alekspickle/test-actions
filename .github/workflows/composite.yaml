@@ -12,6 +12,8 @@ outputs:
 runs:
   using: "composite"
   steps:
-    - id: greet
-    - run: echo "greet_text='Hello. ${{ inputs.name }}'" >> $GITHUB_OUTPUT
+    - use: actions/checkout@v2
+    - name: Swoooosh
+      id: greet
+      run: echo "greet_text='Hello. ${{ inputs.name }}'" >> $GITHUB_OUTPUT
 
